@@ -7,38 +7,35 @@ class Node
 end
 
 class BinarySearchTree
+    attr_accessor :root, :size
     def initialize
         @root = nil
+        @size = 0;
     end
 
-    #insert method for BST (sorted data)
-    def insert(value)
-        @newNode = Node.new(value)
-        if @root.nil?
-            @root = @newNode
-            return
-        else
-            @current = @root
-            while true
-                if value < @current.value
-                    if @current.left.nil?
-                        @current.left = @newNode
-                        return
-                    else
-                        @current = @current.left
-                    end
-                elsif value > @current.value
-                    if @current.right.nil?
-                        @current.right = @newNode
-                        return
-                    else
-                        @current = @current.right
-                    end
-                end
+def insert(value)
+    if @root == nil
+        @root = Node.new(value)
+    else
+        curr_node = @root
+        previous_node = @root
+        #while loop helps finding the position of insertion
+        while curr_node != nil
+            previous_node = curr_node
+            if value < curr_node.value
+                curr_node = curr_node.left
+            else
+                curr_node = curr_node.right
             end
         end
-            
+        if value < previous_node.value
+            previous_node.left = Node.new(value)
+        else
+            previous_node.right = Node.new(value)
+        end
     end
+    @size += 1
+end
 
     def pre_order
         @result = []
